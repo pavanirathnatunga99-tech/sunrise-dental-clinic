@@ -74,16 +74,16 @@ For custom credentials, set `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, and `JWT_SEC
 
 ## Useful API routes
 
-| Method | Route | Purpose |
-|---|---|---|
-| POST | `/api/auth/login` | Staff login |
-| GET/POST | `/api/patients` | Search/register patients |
-| GET/POST | `/api/appointments` | Daily list/create booking |
-| GET/PUT | `/api/appointments/{number}` | Display/edit booking |
-| PATCH | `/api/appointments/{number}/cancel` | Cancel booking |
-| POST | `/api/bills/appointment/{number}` | Calculate or retrieve bill |
-| PATCH | `/api/bills/{invoice}/pay` | Mark invoice paid |
-| GET | `/api/dashboard` | Daily report summary |
+| Method   | Route                               | Purpose                    |
+| -------- | ----------------------------------- | -------------------------- |
+| POST     | `/api/auth/login`                   | Staff login                |
+| GET/POST | `/api/patients`                     | Search/register patients   |
+| GET/POST | `/api/appointments`                 | Daily list/create booking  |
+| GET/PUT  | `/api/appointments/{number}`        | Display/edit booking       |
+| PATCH    | `/api/appointments/{number}/cancel` | Cancel booking             |
+| POST     | `/api/bills/appointment/{number}`   | Calculate or retrieve bill |
+| PATCH    | `/api/bills/{invoice}/pay`          | Mark invoice paid          |
+| GET      | `/api/dashboard`                    | Daily report summary       |
 
 All routes except login and API documentation require `Authorization: Bearer <token>`. Dentist and treatment writes require `ADMIN`.
 
