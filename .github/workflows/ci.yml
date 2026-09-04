@@ -1,0 +1,55 @@
+name: Sunrise Dental Clinic CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    name: Test and build application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: Run backend automated tests
+        working-directory: backend
+        run: mvn --batch-mode clean test
+      - name: Package Spring Boot backend
+        working-directory: backend
+        run: mvn --batch-mode package -DskipTests
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Build React frontend
+        working-directory: frontend
+        run: npm run build
+      - name: Upload backend package
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunrise-dental-backend
+          path: backend/target/*.jar
+          if-no-files-found: error
+      - name: Upload frontend package
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunrise-dental-frontend
+          path: frontend/dist/
+          if-no-files-found: error
